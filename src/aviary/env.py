@@ -280,7 +280,7 @@ class Environment(ABC, Generic[TEnvState]):
         This is not exhaustive, because some may be importable and so you should just
         try to call `from_name`. This is more for logging/debugging purposes.
         """
-        return set(ENV_REGISTRY.keys())
+        return set(ENV_REGISTRY)
 
 
 # Maps baseline environment names to their module and class names
