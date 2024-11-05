@@ -57,7 +57,7 @@ class Message(BaseModel):
     @classmethod
     def check_role(cls, v: str) -> str:
         if v not in cls.VALID_ROLES:
-            raise ValueError(f"Role {v} was not in {cls.VALID_ROLES}.")
+            raise ValueError(f"Role {v} is not in {cls.VALID_ROLES}.")
         return v
 
     @model_validator(mode="before")
