@@ -46,9 +46,7 @@ class Frame(BaseModel):
 
     @staticmethod
     def _custom_serializer(value: Serializable, handler, info):  # noqa: ARG004
-        if isinstance(value, BaseModel):
-            return value.model_dump()
-        return handler(value)
+        return value.model_dump() if isinstance(value, BaseModel) else handler(value)
 
     state: Annotated[Serializable | None, WrapSerializer(_custom_serializer)] = Field(
         default=None,
