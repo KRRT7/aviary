@@ -4,6 +4,7 @@ import json
 from collections.abc import Iterable
 from typing import TYPE_CHECKING, ClassVar, Self
 
+import numpy as np
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from aviary.utils import encode_image_to_base64
@@ -140,9 +141,13 @@ class Message(BaseModel):
 def join(
     msgs: Iterable[Message], delimiter: str = "\n", include_roles: bool = True
 ) -> str:
-    return delimiter.join(
-        f"{f'{m.role}: ' if include_roles else ''}{m.content or ''}" for m in msgs
-    )
+    parts = []
+    for m in msgs:
+        role_str = f"{m.role}: " if include_roles else ""
+        content_str = m.content or ""
+        parts.append(f"{role_str}{content_str}")
+
+    return delimiter.join(parts)
 
 
 class MalformedMessageError(ValueError):
