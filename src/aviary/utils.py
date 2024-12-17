@@ -22,7 +22,7 @@ LLM_EVAL_CONFIG = {
     "temperature": 0,
 }
 
-LLM_SCORE_EVAL_CONFIG = {
+LLM_SCORE_EVAL_CONFIG = LLM_EVAL_CONFIG | {
     "prompt": (
         "Here is a question, the correct answer to the question, and a rubric for"
         " evaluating the question. Judge the proposed answer based on the given rubric."
@@ -31,8 +31,6 @@ LLM_SCORE_EVAL_CONFIG = {
         "\n\nRubric: {correct_answer}"
         "\n\nProposed answer: {proposed_answer}"
     ),
-    "model": "gpt-4o-mini",
-    "temperature": 0,
     "max_score": 10,
 }
 
@@ -94,13 +92,14 @@ async def eval_answer(
     proposed: str,
     correct: str,
     question: str | None = None,
-    eval_mode: EvalAnswerMode = EvalAnswerMode.CONTAINS,
+    eval_mode: str | EvalAnswerMode = EvalAnswerMode.CONTAINS,
     llm_eval_config: dict | None = None,
 ) -> float:
     """Evaluate a proposed answer against a correct answer.
 
     Will return 0 or 1, except for llm-score which should be between 0 and 1
     """
+    eval_mode = EvalAnswerMode(eval_mode)
     if eval_mode in {EvalAnswerMode.LLM, EvalAnswerMode.LLM_SCORE}:
         try:
             from litellm import acompletion
