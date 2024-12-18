@@ -1,13 +1,11 @@
 interactions:
   - request:
       body:
-        '{"messages": [{"content": "Here is a question, the correct answer to the
-        question, and a proposed answer to the question. Please tell me if the proposed
-        answer is correct, given the correct answer. ONLY SAY ''YES'' OR ''NO''. No
-        other output is permitted.\n\nQuestion: Which of the following is most likely
-        true:\n\nA) Piggie, B) Pigeon, C) Gerald\n\n\nCorrect answer: C\n\nProposed
-        answer: Based on all factors considered, the most compelling answer is Gerald,
-        C", "role": "user"}], "model": "gpt-4o-mini", "temperature": 0}'
+        '{"messages": [{"content": "You are evaluating answers for a test which
+        has fixed options. Repeat back which option the proposed answer matches. GIVE
+        ONLY THE VERBATIM TEXT OF A FIXED OPTION. If the proposed answer is empty, invalid,
+        or ambiguous, return an empty string.\n\nOptions:\nB\nC\n\nProposed answer:
+        F", "role": "user"}], "model": "gpt-4o-mini", "temperature": 0}'
       headers:
         accept:
           - application/json
@@ -16,7 +14,7 @@ interactions:
         connection:
           - keep-alive
         content-length:
-          - "521"
+          - "372"
         content-type:
           - application/json
         host:
@@ -46,16 +44,18 @@ interactions:
     response:
       body:
         string: !!binary |
-          H4sIAAAAAAAAA4ySy2rDMBBF9/4KoXVcnMTOa1dKCl00lAZKHxSjSGNbjSwJaUJTSv69yHnYoSl0
-          o8WcuVd3RvqOCKFS0BmhvGLIa6vi6+LzZr54vh2tB/Xr0zgTi8Lh/ZY93vHlA+0FhVl9AMej6oqb
-          2ipAafQecwcMIbj2x8M0yyZZf9KA2ghQQVZajFMT11LLeJAM0jgZx/3JQV0ZycHTGXmLCCHkuzlD
-          Ti1gS2ck6R0rNXjPSqCzUxMh1BkVKpR5Lz0yjbTXQm40gm6iv8yXXeKg2HgW0umNUof67nSVMqV1
-          ZuUP/FQvpJa+yh0wb3Sw9WgsbeguIuS9GWlzlpJaZ2qLOZo16GDYT7K9H2032aEHhgaZ6opGvQt2
-          uQBkUvnOTihnvALRStsFso2QpgOiztC/w1zy3g8udfkf+xZwDhZB5NaBkPx84LbNQfhnf7WdltwE
-          pv7LI9R5IXUJzjq5f+XC5sMpSxM+HbGERrvoBwAA//8DAJN7IxXzAgAA
+          H4sIAAAAAAAAAwAAAP//jFLLTsMwELznK6w9NyjpM/QGiAsSEuICEkKR62wSg2Nb9rY8qv47chLa
+          VC0SFx9mdsYza28jxkAWsGQgak6isSq+Kj9ubt0dyflYyIfy8b7mT5ss3Txff6sJjILCrN5Q0K/q
+          QpjGKiRpdEcLh5wwuKaLyXQ2y2Zp1hKNKVAFWWUpnpq4kVrG42Q8jZNFnGa9ujZSoIcle4kYY2zb
+          niGnLvATliwZ/SINes8rhOV+iDFwRgUEuPfSE9cEowMpjCbUbfQh7LBcex6i6bVSPb7b36NMZZ1Z
+          +Z7f46XU0te5Q+6NDp6ejIWW3UWMvbZ91kcRwTrTWMrJvKMOhvPLzg4OWzyQfVUgQ1yd0RyZ5QUS
+          l8oP1gGCixqLE0PGgK8LaQZENKh8muWcd1db6uo/9gdCCLSERW4dFlKc7duahy/219h+xW1g8F+e
+          sMlLqSt01snugUubz0uRJpgmuIJoF/0AAAD//wMAUYws+e4CAAA=
       headers:
+        CF-Cache-Status:
+          - DYNAMIC
         CF-RAY:
-          - 8f425bb118049453-SJC
+          - 8f425bb11ca22513-SJC
         Connection:
           - keep-alive
         Content-Encoding:
@@ -67,10 +67,10 @@ interactions:
         Server:
           - cloudflare
         Set-Cookie:
-          - __cf_bm=shlFi0WrRQqtHm9BFHA8BA_DE3OgD.WLNX_BG0MJ.Uc-1734558518-1.0.1.1-dTPiGPfeRXm4eFyNx5Qhh98ITpHISNJJ15gnJl7VfBbOzj3CoF.H.Mssss_WvoWjPSiaq4ZWwBKCF16.mbMFig;
+          - __cf_bm=ABTDwd4t79cPLIko1hPlFoZXxUQ6rzPq8jHwq1Xy7XE-1734558518-1.0.1.1-Qqt3v2jz7xPx17Fx0ehWguxbmaMuZk4B3NM4Z1HW2aMmaaTMq2RvfX.y5A9X5qv4xoO0qWDJdyM.E9ahp.RW5A;
             path=/; expires=Wed, 18-Dec-24 22:18:38 GMT; domain=.api.openai.com; HttpOnly;
             Secure; SameSite=None
-          - _cfuvid=LbfayFWmgFkPH4gOfhOfLicD7koAa3IqwrVpt0Q2uQ0-1734558518270-0.0.1.1-604800000;
+          - _cfuvid=17oj8YL1hlYLaR7o.N8HEjWKDALCyYtBfmHe30jFAG0-1734558518262-0.0.1.1-604800000;
             path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
         Transfer-Encoding:
           - chunked
@@ -80,12 +80,10 @@ interactions:
           - X-Request-ID
         alt-svc:
           - h3=":443"; ma=86400
-        cf-cache-status:
-          - DYNAMIC
         openai-organization:
           - future-house-xr4tdh
         openai-processing-ms:
-          - "226"
+          - "232"
         openai-version:
           - "2020-10-01"
         strict-transport-security:
@@ -95,15 +93,15 @@ interactions:
         x-ratelimit-limit-tokens:
           - "150000000"
         x-ratelimit-remaining-requests:
-          - "29998"
+          - "29996"
         x-ratelimit-remaining-tokens:
-          - "149999877"
+          - "149992191"
         x-ratelimit-reset-requests:
-          - 2ms
+          - 7ms
         x-ratelimit-reset-tokens:
-          - 0s
+          - 3ms
         x-request-id:
-          - req_c627f8d13c1969c6fd3a26f94a43a44f
+          - req_e11e29110308fec0a5310bf18d49c27d
       status:
         code: 200
         message: OK

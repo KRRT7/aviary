@@ -2,7 +2,7 @@ from collections.abc import Iterable, Sequence
 
 import pytest
 
-from aviary.core import eval_answer
+from aviary.core import eval_answer, extract_answer
 from aviary.utils import MultipleChoiceEvaluation, MultipleChoiceQuestion
 from tests.conftest import VCR_DEFAULT_MATCH_ON
 
@@ -37,6 +37,35 @@ async def test_eval_answer(
     proposed: str, correct: str, question: str | None, eval_mode: str, expected: float
 ) -> None:
     assert await eval_answer(proposed, correct, question, eval_mode) == expected
+
+
+@pytest.mark.vcr
+@pytest.mark.parametrize(
+    ("proposed_answer", "options", "expected"),
+    [
+        pytest.param("A", ["A", "B", "C"], "A", id="exact-uppercase"),
+        pytest.param("a", ["A", "B", "C"], "A", id="exact-lowercase"),
+        pytest.param("F", ["B", "C"], None, id="not in options"),
+        pytest.param("A or B", ["A", "B", "C"], None, id="gave-two"),
+        pytest.param(
+            "Based on the context given, Serif et al. (2026) claim that "
+            "the overwhelming cause of regime collapse arises from economic factors. "
+            "Yet, most other scholars (Gerald and Robinson for example) believe the collapse "
+            "was due to social unrest because of the prolonged epidemic of 2025. I tend to agree "
+            "with the majority - although I can see both sides. Thus my response "
+            "is that the social unrest was the significant factor in the collapse of the regime.",
+            ["Economic factors", "Social unrest", "Political corruption"],
+            "Social unrest",
+            id="complex",
+        ),
+        pytest.param("", ["A", "B", "C"], None, id="empty-proposal"),
+    ],
+)
+@pytest.mark.asyncio
+async def test_extract_answer(
+    proposed_answer: str, options: Sequence[str], expected: str | None
+) -> None:
+    assert await extract_answer(proposed_answer, options) == expected
 
 
 @pytest.mark.vcr
@@ -108,7 +137,7 @@ class TestLitQAEvaluation:
                 *ZIP_CODE_QUESTION_IDEAL_DISTRACTORS,
                 "the answer is 14004",
                 MultipleChoiceEvaluation.INCORRECT,
-                "0",
+                None,
                 id="didnt-match-and-no-llm-innate-knowledge",
             ),
             pytest.param(
@@ -129,35 +158,35 @@ class TestLitQAEvaluation:
                 *ZIP_CODE_QUESTION_IDEAL_DISTRACTORS,
                 "the answer is 94106 or 94107",
                 MultipleChoiceEvaluation.INCORRECT,
-                "0",
+                None,
                 id="matched-several-options",
             ),
             pytest.param(
                 *ZIP_CODE_QUESTION_IDEAL_DISTRACTORS,
                 "",
                 MultipleChoiceEvaluation.INCORRECT,
-                "0",
+                None,
                 id="empty-answer1",
             ),
             pytest.param(
                 *MEANING_OF_LIFE_QUESTION_IDEAL_DISTRACTORS,
                 "14",
                 MultipleChoiceEvaluation.INCORRECT,
-                "0",
+                None,
                 id="didnt-match-and-llm-has-innate-knowledge",
             ),
             pytest.param(
                 *MEANING_OF_LIFE_QUESTION_IDEAL_DISTRACTORS,
                 "",
                 MultipleChoiceEvaluation.INCORRECT,
-                "0",
+                None,
                 id="empty-answer2",
             ),
             pytest.param(
                 *LITQA2_QUESTION_IDEAL_DISTRACTORS,
                 "",
                 MultipleChoiceEvaluation.INCORRECT,
-                "0",
+                None,
                 id="empty-answer3",
             ),
         ],
@@ -169,7 +198,7 @@ class TestLitQAEvaluation:
         distractors: str | list[str],
         actual_answer: str,
         expected_eval: MultipleChoiceEvaluation,
-        expected_extracted_answer: str,
+        expected_extracted_answer: str | None,
     ) -> None:
         """Tests that we can create a multiple choice question and evaluate answers."""
         mc_question = MultipleChoiceQuestion(
@@ -179,7 +208,7 @@ class TestLitQAEvaluation:
             shuffle_seed=42,  # Seed for VCR cassette
         )
         self._assert_prompt_is_valid(mc_question, question, ideal_answer, distractors)
-        evaluation, _, graded_answer = await mc_question.grade(actual_answer)
+        evaluation, graded_answer = await mc_question.grade(actual_answer)
         assert evaluation == expected_eval
         if evaluation == MultipleChoiceEvaluation.CORRECT:
             assert graded_answer == ideal_answer

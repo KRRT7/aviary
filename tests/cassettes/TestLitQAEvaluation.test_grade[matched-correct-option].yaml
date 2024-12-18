@@ -1,13 +1,12 @@
 interactions:
   - request:
       body:
-        '{"messages": [{"content": "Given the following question and a proposed
-        answer to the question, return the single-letter choice in the question that
-        matches the proposed answer. If the proposed answer is blank or an empty string,
-        or multiple options are matched, respond with ''0''.\n\nQuestion: Q: What is
-        my office''s zip code?\n\nOptions:\nA) -8\nB) Insufficient information to answer
-        this question\nC) cheesecake\nD) 94106\nE) 94107\n\nProposed Answer: the answer
-        is 94107\n\nSingle Letter Answer:", "role": "user"}], "model": "gpt-4o"}'
+        '{"messages": [{"content": "You are evaluating answers for a test which
+        has fixed options. Repeat back which option the proposed answer matches. GIVE
+        ONLY THE VERBATIM TEXT OF A FIXED OPTION. If the proposed answer is empty, invalid,
+        or ambiguous, return an empty string.\n\nOptions:\n-8\nInsufficient information
+        to answer this question\ncheesecake\n94106\n94107\n\nProposed answer: the answer
+        is 94107", "role": "user"}], "model": "gpt-4o-mini", "temperature": 0}'
       headers:
         accept:
           - application/json
@@ -16,7 +15,7 @@ interactions:
         connection:
           - keep-alive
         content-length:
-          - "536"
+          - "464"
         content-type:
           - application/json
         host:
@@ -46,18 +45,18 @@ interactions:
     response:
       body:
         string: !!binary |
-          H4sIAAAAAAAAAwAAAP//jJJLb4MwEITv/ArLZ6ggoXlwyyGKcql6Sx+qkLEXcGtsyzZSoyj/vTKQ
-          QNRU6oXDfDvD7MIpQAhzhjOEaU0cbbSINuXb02Z73L287ndH1ias2C8k3a0OB1Y949A7VPEJ1F1c
-          D1Q1WoDjSvaYGiAOfGqynKfpMl6u0g40ioHwtkq7KFXRLJ6lUbyK4sVgrBWnYHGG3gOEEDp1T19R
-          MvjGGYrDi9KAtaQCnF2HEMJGCa9gYi23jkiHwxFSJR3IrvV2qhsoW0t8LdkKMejn64uEqrRRhR34
-          VS+55LbODRCrpA+1Tmnc0XOA0Ee3UHvTEWujGu1yp75A+sAkeezz8HjCCR2YU46IqWkR3onLGTjC
-          hZ1cBFNCa2CjdTwfaRlXExBMlv5d5l52vziX1X/iR0ApaAcs1wYYp7cLj2MG/A/219j1yF1hbI/W
-          QZOXXFZgtOH9Ny51vi5JQdZlPF/h4Bz8AAAA//8DAKuPA4PsAgAA
+          H4sIAAAAAAAAAwAAAP//jJI/b8MgEMV3fwrEbFf+FznxllSpOlTKVHWoKovA2abFgACrSaN89won
+          jR01lbow3O/e493BIUAIc4ZLhGlLHO20iJb15/3DelPvN7De7lY6fukfnxl7ylaL5RcOvUJt34G6
+          H9UdVZ0W4LiSJ0wNEAfeNSmyfDabz5LFADrFQHhZo12Uq6jjkkdpnOZRXETJ/KxuFadgcYleA4QQ
+          OgynzykZ7HCJ4vCn0oG1pAFcXpoQwkYJX8HEWm4dkQ6HI6RKOpBD9EWexMWUGah7S3w+2Qtxrh8v
+          lwnVaKO29swv9ZpLbtvKALFKemPrlMYDPQYIvQ1D9Vc5sTaq065y6gOkN1wkJzs8rnKE6Zk55YiY
+          aLLwhlnFwBEu7GQnmBLaAhuV4wJJz7iagGAy8u8st7xPY3PZ/Md+BJSCdsAqbYBxej3v2GbA/7O/
+          2i4rHgJju7cOuqrmsgGjDT+9cq0rFqdsliXbvMDBMfgGAAD//wMAitN9t/MCAAA=
       headers:
         CF-Cache-Status:
           - DYNAMIC
         CF-RAY:
-          - 8f39fdc06b78cf26-SJC
+          - 8f425bb60cfe17e4-SJC
         Connection:
           - keep-alive
         Content-Encoding:
@@ -65,7 +64,7 @@ interactions:
         Content-Type:
           - application/json
         Date:
-          - Tue, 17 Dec 2024 21:26:24 GMT
+          - Wed, 18 Dec 2024 21:48:39 GMT
         Server:
           - cloudflare
         Transfer-Encoding:
@@ -79,25 +78,25 @@ interactions:
         openai-organization:
           - future-house-xr4tdh
         openai-processing-ms:
-          - "291"
+          - "538"
         openai-version:
           - "2020-10-01"
         strict-transport-security:
           - max-age=31536000; includeSubDomains; preload
         x-ratelimit-limit-requests:
-          - "10000"
+          - "30000"
         x-ratelimit-limit-tokens:
-          - "30000000"
+          - "150000000"
         x-ratelimit-remaining-requests:
-          - "9999"
+          - "29999"
         x-ratelimit-remaining-tokens:
-          - "29999868"
+          - "149999891"
         x-ratelimit-reset-requests:
-          - 6ms
+          - 2ms
         x-ratelimit-reset-tokens:
           - 0s
         x-request-id:
-          - req_89e3d88c7f12861d7e774e452300b36d
+          - req_9bd9d799783ab13ef59ce8e5ca7fd25f
       status:
         code: 200
         message: OK

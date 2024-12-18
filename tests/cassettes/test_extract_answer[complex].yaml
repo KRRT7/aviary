@@ -1,13 +1,18 @@
 interactions:
   - request:
       body:
-        '{"messages": [{"content": "Here is a question, the correct answer to the
-        question, and a proposed answer to the question. Please tell me if the proposed
-        answer is correct, given the correct answer. ONLY SAY ''YES'' OR ''NO''. No
-        other output is permitted.\n\nQuestion: Which of the following is most likely
-        true:\n\nA) Piggie, B) Pigeon, C) Gerald\n\n\nCorrect answer: C\n\nProposed
-        answer: Based on all factors considered, the most compelling answer is Gerald,
-        C", "role": "user"}], "model": "gpt-4o-mini", "temperature": 0}'
+        '{"messages": [{"content": "You are evaluating answers for a test which
+        has fixed options. Repeat back which option the proposed answer matches. GIVE
+        ONLY THE VERBATIM TEXT OF A FIXED OPTION. If the proposed answer is empty, invalid,
+        or ambiguous, return an empty string.\n\nOptions:\nEconomic factors\nSocial
+        unrest\nPolitical corruption\n\nProposed answer: Based on the context given,
+        Serif et al. (2026) claim that the overwhelming cause of regime collapse arises
+        from economic factors. Yet, most other scholars (Gerald and Robinson for example)
+        believe the collapse was due to social unrest because of the prolonged epidemic
+        of 2025. I tend to agree with the majority - although I can see both sides.
+        Thus my response is that the social unrest was the significant factor in the
+        collapse of the regime.", "role": "user"}], "model": "gpt-4o-mini", "temperature":
+        0}'
       headers:
         accept:
           - application/json
@@ -16,7 +21,7 @@ interactions:
         connection:
           - keep-alive
         content-length:
-          - "521"
+          - "866"
         content-type:
           - application/json
         host:
@@ -36,7 +41,7 @@ interactions:
         x-stainless-raw-response:
           - "true"
         x-stainless-retry-count:
-          - "0"
+          - "1"
         x-stainless-runtime:
           - CPython
         x-stainless-runtime-version:
@@ -46,16 +51,18 @@ interactions:
     response:
       body:
         string: !!binary |
-          H4sIAAAAAAAAA4ySy2rDMBBF9/4KoXVcnMTOa1dKCl00lAZKHxSjSGNbjSwJaUJTSv69yHnYoSl0
-          o8WcuVd3RvqOCKFS0BmhvGLIa6vi6+LzZr54vh2tB/Xr0zgTi8Lh/ZY93vHlA+0FhVl9AMej6oqb
-          2ipAafQecwcMIbj2x8M0yyZZf9KA2ghQQVZajFMT11LLeJAM0jgZx/3JQV0ZycHTGXmLCCHkuzlD
-          Ti1gS2ck6R0rNXjPSqCzUxMh1BkVKpR5Lz0yjbTXQm40gm6iv8yXXeKg2HgW0umNUof67nSVMqV1
-          ZuUP/FQvpJa+yh0wb3Sw9WgsbeguIuS9GWlzlpJaZ2qLOZo16GDYT7K9H2032aEHhgaZ6opGvQt2
-          uQBkUvnOTihnvALRStsFso2QpgOiztC/w1zy3g8udfkf+xZwDhZB5NaBkPx84LbNQfhnf7WdltwE
-          pv7LI9R5IXUJzjq5f+XC5sMpSxM+HbGERrvoBwAA//8DAJN7IxXzAgAA
+          H4sIAAAAAAAAAwAAAP//jJLNasMwEITvfgqhc1zsNE5S30qhhzZQaKE5lGIUaW2rkbVCkklDyLsX
+          OT92aAq96LDfzmh2pV1ECJWC5oTymnneGBXfl5uHx4VKt7PNy3KdLerpUj8/vavXxtkNHQUFrr6A
+          +5PqhmNjFHiJ+oC5BeYhuKaz20mWzbP0rgMNClBBVhkfTzBupJbxOBlP4mQWp/OjukbJwdGcfESE
+          ELLrzpBTC/imOUlGp0oDzrEKaH5uIoRaVKFCmXPSeaY9HfWQo/agu+hvyCVTpNUW3EWPhbJ1LOTU
+          rVLH+v58qcLKWFy5Iz/XS6mlqwsLzKEOFziPhnZ0HxHy2Q3XXuSlxmJjfOFxDToYptPs4Ef7nfZ0
+          fGQePVND0Wx0xa4Q4JlUbrAdyhmvQfTSfpWsFRIHIBoM/TvMNe/D4FJX/7HvAedgPIjCWBCSXw7c
+          t1kIP+6vtvOSu8DUbZ2HpiilrsAaKw/vXZpiWvI0gTSBFY320Q8AAAD//wMA8VLBff0CAAA=
       headers:
+        CF-Cache-Status:
+          - DYNAMIC
         CF-RAY:
-          - 8f425bb118049453-SJC
+          - 8f425bb69fe5250c-SJC
         Connection:
           - keep-alive
         Content-Encoding:
@@ -63,15 +70,9 @@ interactions:
         Content-Type:
           - application/json
         Date:
-          - Wed, 18 Dec 2024 21:48:38 GMT
+          - Wed, 18 Dec 2024 21:48:39 GMT
         Server:
           - cloudflare
-        Set-Cookie:
-          - __cf_bm=shlFi0WrRQqtHm9BFHA8BA_DE3OgD.WLNX_BG0MJ.Uc-1734558518-1.0.1.1-dTPiGPfeRXm4eFyNx5Qhh98ITpHISNJJ15gnJl7VfBbOzj3CoF.H.Mssss_WvoWjPSiaq4ZWwBKCF16.mbMFig;
-            path=/; expires=Wed, 18-Dec-24 22:18:38 GMT; domain=.api.openai.com; HttpOnly;
-            Secure; SameSite=None
-          - _cfuvid=LbfayFWmgFkPH4gOfhOfLicD7koAa3IqwrVpt0Q2uQ0-1734558518270-0.0.1.1-604800000;
-            path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
         Transfer-Encoding:
           - chunked
         X-Content-Type-Options:
@@ -80,12 +81,10 @@ interactions:
           - X-Request-ID
         alt-svc:
           - h3=":443"; ma=86400
-        cf-cache-status:
-          - DYNAMIC
         openai-organization:
           - future-house-xr4tdh
         openai-processing-ms:
-          - "226"
+          - "491"
         openai-version:
           - "2020-10-01"
         strict-transport-security:
@@ -95,15 +94,15 @@ interactions:
         x-ratelimit-limit-tokens:
           - "150000000"
         x-ratelimit-remaining-requests:
-          - "29998"
+          - "29999"
         x-ratelimit-remaining-tokens:
-          - "149999877"
+          - "149999790"
         x-ratelimit-reset-requests:
           - 2ms
         x-ratelimit-reset-tokens:
           - 0s
         x-request-id:
-          - req_c627f8d13c1969c6fd3a26f94a43a44f
+          - req_0446ed4c188b77427f33f74f91e0d112
       status:
         code: 200
         message: OK

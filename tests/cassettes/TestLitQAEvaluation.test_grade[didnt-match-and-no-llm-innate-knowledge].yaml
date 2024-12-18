@@ -1,13 +1,12 @@
 interactions:
   - request:
       body:
-        '{"messages": [{"content": "Given the following question and a proposed
-        answer to the question, return the single-letter choice in the question that
-        matches the proposed answer. If the proposed answer is blank or an empty string,
-        or multiple options are matched, respond with ''0''.\n\nQuestion: Q: What is
-        my office''s zip code?\n\nOptions:\nA) -8\nB) Insufficient information to answer
-        this question\nC) cheesecake\nD) 94106\nE) 94107\n\nProposed Answer: the answer
-        is 14004\n\nSingle Letter Answer:", "role": "user"}], "model": "gpt-4o"}'
+        '{"messages": [{"content": "You are evaluating answers for a test which
+        has fixed options. Repeat back which option the proposed answer matches. GIVE
+        ONLY THE VERBATIM TEXT OF A FIXED OPTION. If the proposed answer is empty, invalid,
+        or ambiguous, return an empty string.\n\nOptions:\n-8\nInsufficient information
+        to answer this question\ncheesecake\n94106\n94107\n\nProposed answer: the answer
+        is 14004", "role": "user"}], "model": "gpt-4o-mini", "temperature": 0}'
       headers:
         accept:
           - application/json
@@ -16,7 +15,7 @@ interactions:
         connection:
           - keep-alive
         content-length:
-          - "536"
+          - "464"
         content-type:
           - application/json
         host:
@@ -36,7 +35,7 @@ interactions:
         x-stainless-raw-response:
           - "true"
         x-stainless-retry-count:
-          - "1"
+          - "0"
         x-stainless-runtime:
           - CPython
         x-stainless-runtime-version:
@@ -46,18 +45,18 @@ interactions:
     response:
       body:
         string: !!binary |
-          H4sIAAAAAAAAAwAAAP//jJJLT8MwEITv+RWWzw1KS2lCb3BCSDykcuAhFBl7kxocr2Vveajqf0dO
-          2yQVIHHJYb6dyewm64QxrhWfMy6XgmTjTHpWPV6fFzf1Jcwebu4WF4tbunKFwvzj/n3GR9GBL68g
-          ae86ktg4A6TRbrH0IAhi6jg/nk7zLC9OWtCgAhNttaN0iukkm0zTrEizXa5copYQ+Jw9JYwxtm6f
-          saJV8MnnLBvtlQZCEDXweTfEGPdoosJFCDqQsMRHPZRoCWzbOhvqHqpVELGWXRmz0zfdiwzWzuNL
-          2PFOr7TVYVl6EAFtDA2Ejrd0kzD23C60OujIncfGUUn4BjYGjscn2zzen3BAd4yQhBmaZqNf4koF
-          JLQJg4twKeQSVG/tzydWSuMAJIOlf5b5LXu7uLb1f+J7ICU4AlU6D0rLw4X7MQ/xB/trrDtyW5iH
-          r0DQlJW2NXjn9fYbV64U+akqlJDjiieb5BsAAP//AwBRMcSQ7AIAAA==
+          H4sIAAAAAAAAAwAAAP//jFLLbsIwELznK6w9kyqB8MoNoR7aAxdKVamqImNvElPHtmyjPhD/XjlQ
+          AoJKvfgwszOeWXsXEQKCQ06A1dSzxsh4Vn7M71fZMntcjAbfz6uXjTSbh9mCPk2Xc+gFhV5vkPlf
+          1R3TjZHohVYHmlmkHoNrOh5kw+FkmE5aotEcZZBVxseZjhuhRNxP+lmcjON0clTXWjB0kJPXiBBC
+          du0ZciqOn5CTpPeLNOgcrRDy0xAhYLUMCFDnhPNUeeh1JNPKo2qjn8MWy62jIZraSnnE96d7pK6M
+          1Wt35E94KZRwdWGROq2Cp/PaQMvuI0Le2j7bi4hgrG6ML7x+RxUMp+nBDrotduSxKnjtqbyhuTAr
+          OHoqpDtbBzDKauRXhoQA3XKhz4jorPJ1llveh9pCVf+x7wjG0HjkhbHIBbvZtzUPX+yvsdOK28Dg
+          vpzHpiiFqtAaKw4PXJpiVLI0wTTBNUT76AcAAP//AwBkI2np7gIAAA==
       headers:
         CF-Cache-Status:
           - DYNAMIC
         CF-RAY:
-          - 8f39fdc63fbf9e53-SJC
+          - 8f425bb11b702519-SJC
         Connection:
           - keep-alive
         Content-Encoding:
@@ -65,9 +64,15 @@ interactions:
         Content-Type:
           - application/json
         Date:
-          - Tue, 17 Dec 2024 21:26:25 GMT
+          - Wed, 18 Dec 2024 21:48:38 GMT
         Server:
           - cloudflare
+        Set-Cookie:
+          - __cf_bm=6j4w6Jnsg0wGsZf61WcNCvHdr1Vcb6uVLFFhTQQgcv4-1734558518-1.0.1.1-D0vsT8nCM66xiA.Xa6ijXpgeGPM65Iux2KhQqUiD8wToq.VmwT03dnkmELw1qn0GvHJvh8g7H6WkqYzXVgs2Xg;
+            path=/; expires=Wed, 18-Dec-24 22:18:38 GMT; domain=.api.openai.com; HttpOnly;
+            Secure; SameSite=None
+          - _cfuvid=LFVOxysXKxTPNQ2KK05aqbBnIRDPc45hskCPkFcOjXA-1734558518178-0.0.1.1-604800000;
+            path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
         Transfer-Encoding:
           - chunked
         X-Content-Type-Options:
@@ -79,25 +84,25 @@ interactions:
         openai-organization:
           - future-house-xr4tdh
         openai-processing-ms:
-          - "212"
+          - "131"
         openai-version:
           - "2020-10-01"
         strict-transport-security:
           - max-age=31536000; includeSubDomains; preload
         x-ratelimit-limit-requests:
-          - "10000"
+          - "30000"
         x-ratelimit-limit-tokens:
-          - "30000000"
+          - "150000000"
         x-ratelimit-remaining-requests:
-          - "9999"
+          - "29999"
         x-ratelimit-remaining-tokens:
-          - "29999868"
+          - "149999890"
         x-ratelimit-reset-requests:
-          - 6ms
+          - 2ms
         x-ratelimit-reset-tokens:
           - 0s
         x-request-id:
-          - req_afd8c66d84f3b42a8cd2b8a6bf855054
+          - req_12c5e1cdb8b2ba32b075f04f20194421
       status:
         code: 200
         message: OK

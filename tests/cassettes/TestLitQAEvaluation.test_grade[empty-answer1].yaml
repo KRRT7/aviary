@@ -1,13 +1,12 @@
 interactions:
   - request:
       body:
-        '{"messages": [{"content": "Given the following question and a proposed
-        answer to the question, return the single-letter choice in the question that
-        matches the proposed answer. If the proposed answer is blank or an empty string,
-        or multiple options are matched, respond with ''0''.\n\nQuestion: Q: What is
-        my office''s zip code?\n\nOptions:\nA) -8\nB) Insufficient information to answer
-        this question\nC) cheesecake\nD) 94106\nE) 94107\n\nProposed Answer: \n\nSingle
-        Letter Answer:", "role": "user"}], "model": "gpt-4o"}'
+        '{"messages": [{"content": "You are evaluating answers for a test which
+        has fixed options. Repeat back which option the proposed answer matches. GIVE
+        ONLY THE VERBATIM TEXT OF A FIXED OPTION. If the proposed answer is empty, invalid,
+        or ambiguous, return an empty string.\n\nOptions:\n-8\nInsufficient information
+        to answer this question\ncheesecake\n94106\n94107\n\nProposed answer: ", "role":
+        "user"}], "model": "gpt-4o-mini", "temperature": 0}'
       headers:
         accept:
           - application/json
@@ -16,7 +15,7 @@ interactions:
         connection:
           - keep-alive
         content-length:
-          - "517"
+          - "445"
         content-type:
           - application/json
         host:
@@ -46,18 +45,16 @@ interactions:
     response:
       body:
         string: !!binary |
-          H4sIAAAAAAAAAwAAAP//jFLLTsMwELznKyyfG+S2gaa5FegFJKRKnEAocp1NaurYlr3hoar/jpyG
-          JBUgcfFhZmc8O/YhIoTKgmaEih1HUVsVr8qnh/XbzfvdI7LN7WzF9vf8Mik31xtYN3QSFGb7CgK/
-          VRfC1FYBSqNPtHDAEYLrdDFPkgVbpGlL1KYAFWSVxTgx8YzNkpilMbvqhDsjBXiakeeIEEIO7Rki
-          6gI+aEbY5BupwXteAc36IUKoMyoglHsvPXKNdDKQwmgE3aZmY9xB2XgeYulGqQ4/9hcpU1lntr7j
-          e7yUWvpd7oB7o4OpR2Npyx4jQl7ahZqzjNQ6U1vM0exBB8MpW5786FDhiO04NMjVCJ52LZzb5QUg
-          l8qPGqGCix0Ug3SojzeFNCMiGi39M8xv3qfFpa7+Yz8QQoBFKHLroJDifOFhzEH4YH+N9SW3gan/
-          9Ah1XkpdgbNOnt64tPmy5Fu+LNk8pdEx+gIAAP//AwDTwVpp7AIAAA==
+          H4sIAAAAAAAAAwAAAP//jFJdS8MwFH3vrwj3eZV2X46+6RAR0T2JikjJkts2miYhSVEZ+++Srms3
+          NsGXPJxzz8k5N9lEhIDgkBFgFfWsNjK+Kr6WN6vb8XL+9LqSxj3Qu2R1ff/8yCfiBUZBodcfyPxe
+          dcF0bSR6odWOZhapx+CaXk6ms9lili5aotYcZZCVxsdTHddCiXicjKdxchmni05dacHQQUbeIkII
+          2bRnyKk4fkNGktEeqdE5WiJk/RAhYLUMCFDnhPNUeRgNJNPKo2qjH8IWi8bREE01Unb4tr9H6tJY
+          vXYd3+OFUMJVuUXqtAqezmsDLbuNCHlv+zRHEcFYXRufe/2JKhgu5js7GLY4kF1V8NpTeUZzZJZz
+          9FRId7AOYJRVyE8MCQHacKEPiOig8mmWc9672kKV/7EfCMbQeOS5scgFO9u3NQ9f7K+xfsVtYHA/
+          zmOdF0KVaI0VuwcuTD4vWJpgmuAaom30CwAA//8DAL0A1qzuAgAA
       headers:
-        CF-Cache-Status:
-          - DYNAMIC
         CF-RAY:
-          - 8f39fddcea1d251d-SJC
+          - 8f425bb5de5996de-SJC
         Connection:
           - keep-alive
         Content-Encoding:
@@ -65,7 +62,7 @@ interactions:
         Content-Type:
           - application/json
         Date:
-          - Tue, 17 Dec 2024 21:26:28 GMT
+          - Wed, 18 Dec 2024 21:48:39 GMT
         Server:
           - cloudflare
         Transfer-Encoding:
@@ -76,28 +73,30 @@ interactions:
           - X-Request-ID
         alt-svc:
           - h3=":443"; ma=86400
+        cf-cache-status:
+          - DYNAMIC
         openai-organization:
           - future-house-xr4tdh
         openai-processing-ms:
-          - "174"
+          - "233"
         openai-version:
           - "2020-10-01"
         strict-transport-security:
           - max-age=31536000; includeSubDomains; preload
         x-ratelimit-limit-requests:
-          - "10000"
+          - "30000"
         x-ratelimit-limit-tokens:
-          - "30000000"
+          - "150000000"
         x-ratelimit-remaining-requests:
-          - "9999"
+          - "29999"
         x-ratelimit-remaining-tokens:
-          - "29999872"
+          - "149999896"
         x-ratelimit-reset-requests:
-          - 6ms
+          - 2ms
         x-ratelimit-reset-tokens:
           - 0s
         x-request-id:
-          - req_4d40eb2c66dfd308a7b75c7cd80c405b
+          - req_0c845e0049332bd1fa73fdbe76005ea1
       status:
         code: 200
         message: OK
