@@ -53,16 +53,16 @@ class CalculatorEnv(Environment[None]):
 
         self.config = config if config is not None else CalculatorEnvConfig()
 
-        self.calc_tool = Tool.from_function(self.calculator)
-        self.check_tool = Tool.from_function(self.submit_answer)
-        self.tools = [self.calc_tool, self.check_tool]
-
     @classmethod
     def from_task(cls, task: str) -> "CalculatorEnv":
         return cls(problem_id="task", problem=task, answer=0.0)
 
     async def reset(self) -> tuple[Messages, list[Tool]]:
         self.state = None  # this environment is effectively stateless
+        self.tools = [
+            Tool.from_function(self.calculator),
+            Tool.from_function(self.submit_answer),
+        ]
         return [Message(content=self.problem)], self.tools
 
     async def step(
@@ -145,28 +145,27 @@ class CalculatorEnv(Environment[None]):
         else:
             return correct, reward, True
 
-    def calculator(self, expr: str) -> tuple[float | str | None, float, bool]:
+    def calculator(self, expr: str) -> tuple[float | str, float, bool]:
         """Calculate a mathematical expression.
 
         Args:
-            expr (str): A valid python expression
+            expr: A valid Python expression.
 
         Returns:
-            float: Result of the expression
+            A three-tuple where the first element is the float evaluation if successful,
+                or a string containing the failure cause if unsuccessful, the second
+                element is the reward associated with success or failure, and the third
+                element is a boolean indicating if this action is terminal.
         """
         try:
             expr = expr.strip()
             result = eval(expr)  # noqa: S307  # pylint: disable=eval-used
-            # logger.debug(f"{expr} = {result}")
-            with contextlib.suppress(ValueError):
+            with contextlib.suppress(ValueError):  # If possible, downcast float to int
                 if int(result) == result:
                     result = int(result)
-
-        except Exception:
-            # msg = f"ERROR: ({expr}) -> {repr(e)}"
-            # logger.error(msg)
+        except Exception as exc:
             return (
-                "Error using calculator",
+                f"Error using calculator: {exc!r}.",
                 self.config.tool_failure_reward,
                 self.config.done_on_failure,
             )
