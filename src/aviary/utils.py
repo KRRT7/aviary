@@ -7,7 +7,7 @@ import string
 from ast import literal_eval
 from collections.abc import Sequence
 from enum import StrEnum
-from typing import TYPE_CHECKING, Any, ClassVar, Literal, Self, cast
+from typing import TYPE_CHECKING, Any, ClassVar, Literal, Self, TypeVar, cast
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -211,11 +211,32 @@ async def extract_answer(
     return None
 
 
+T = TypeVar("T")
+
+
+def shuffle(
+    value: Sequence[T], seed: "int | random.Random | np.random.Generator | None" = None
+) -> Sequence[T]:
+    """Shuffle a non-mutable sequence."""
+    # Since most shuffle fn's are in-place, we employ sampling without replacement
+    if isinstance(seed, int):
+        return random.Random(seed).sample(value, k=len(value))
+    if isinstance(seed, random.Random):
+        return seed.sample(value, k=len(value))
+    if seed is None:
+        return random.sample(value, k=len(value))
+    # Numpy RNG. Note this will have a type error for sequences like str, but oh well
+    return seed.choice(value, size=len(value), replace=False)  # type: ignore[arg-type,return-value]
+
+
 _CAPITAL_A_INDEX = ord("A")
 
 
 class MultipleChoiceQuestion(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(
+        extra="forbid",
+        arbitrary_types_allowed=True,  # Allow random.Random
+    )
 
     OPEN_ANSWER_PROMPT_TEMPLATE: ClassVar[str] = "Q: {question}"
     MC_QUESTION_PROMPT_TEMPLATE: ClassVar[str] = "\n\n".join((
@@ -253,12 +274,17 @@ class MultipleChoiceQuestion(BaseModel):
             " automatically added."
         ),
     )
-    shuffle_seed: int | Literal["SEED_USING_QUESTION"] | None = Field(
+    shuffle_seed: int | random.Random | Literal["SEED_USING_QUESTION"] | None = Field(
         default=None,
         description=(
-            "Optional seed to use in randomization of options, where seeding is not"
-            " global (e.g. no `random.seed`). Optionally pass in the string literal"
-            " 'SEED_USING_QUESTION' to hash the question for the seed"
+            "Optional seed or random number generator to use in randomization of"
+            " options, where seeding is not global (e.g. no `random.seed`). Optionally"
+            " pass in the string literal 'SEED_USING_QUESTION' to hash the question as"
+            " the seed. If making many questions with the same count of options and"
+            " sharing a seed across all instantiations, take care to either specify a"
+            " different seed per question (e.g. using 'SEED_USING_QUESTION') or specify"
+            " a random number generator, to avoid placing the ideal option being"
+            " shuffled into the same index for every question."
         ),
     )
 
@@ -276,9 +302,7 @@ class MultipleChoiceQuestion(BaseModel):
         if self.shuffle_seed == self.SEED_USING_QUESTION:
             self.shuffle_seed = hash(self.question)
         if self.shuffle_seed is not None:
-            self.options = random.Random(self.shuffle_seed).sample(
-                self.options, k=len(self.options)
-            )
+            self.options = shuffle(self.options, seed=self.shuffle_seed)
             # Ensure deserialization doesn't re-shuffle
             self.shuffle_seed = None
         return self
