@@ -269,7 +269,7 @@ _CAPITAL_A_INDEX = ord("A")
 class MultipleChoiceQuestion(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    OPEN_ANSWER_PROMPT_TEMPLATE: ClassVar[str] = "Q: {question}"
+    OPEN_ANSWER_PROMPT_TEMPLATE: ClassVar[str] = "{question_id}: {question}"
     MC_QUESTION_PROMPT_TEMPLATE: ClassVar[str] = "\n\n".join((
         OPEN_ANSWER_PROMPT_TEMPLATE,
         "Options:\n{options}",
@@ -284,6 +284,11 @@ class MultipleChoiceQuestion(BaseModel):
     question: str = Field(
         description="Question to answer (without multiple choice options)."
     )
+
+    question_id: str = Field(
+        default="Q", description="Question identifier used in the prompt."
+    )
+
     prompt_without_options: bool = Field(
         default=False,
         description=(
@@ -348,17 +353,31 @@ class MultipleChoiceQuestion(BaseModel):
         return self.options.index(self.ideal_answer)
 
     @property
+    def ideal_answer_letter(self) -> str:
+        return chr(_CAPITAL_A_INDEX + self.ideal_answer_index)
+
+    @property
     def unsure_answer_index(self) -> int | None:
         if self.unsure_answer is None:
             return None
         return self.options.index(self.unsure_answer)
 
     @property
+    def unsure_answer_letter(self) -> str | None:
+        if self.unsure_answer_index is None:
+            return None
+        return chr(_CAPITAL_A_INDEX + self.unsure_answer_index)
+
+    @property
     def question_prompt(self) -> str:
         if self.prompt_without_options:
-            return self.OPEN_ANSWER_PROMPT_TEMPLATE.format(question=self.question)
+            return self.OPEN_ANSWER_PROMPT_TEMPLATE.format(
+                question=self.question,
+                question_id=self.question_id,
+            )
         return self.MC_QUESTION_PROMPT_TEMPLATE.format(
             question=self.question,
+            question_id=self.question_id,
             options="\n".join([
                 f"{_CAPITAL_A_INDEX + i:c}) {o}" for i, o in enumerate(self.options)
             ]),

@@ -369,6 +369,64 @@ class TestLitQAEvaluation:
             "Serialization then deserialization should lead to same prompts"
         )
 
+    @pytest.mark.parametrize(
+        (
+            "options",
+            "ideal_answer",
+            "unsure_answer",
+            "seed",
+            "expected_ideal_letter",
+            "expected_unsure_letter",
+        ),
+        [
+            # Test cases for ideal and unsure answer letters
+            (["A", "B"], "C", "Not sure", 42, "D", "B"),  # With seed 42
+            (["X", "Y"], "Z", "Unsure", 0, "D", "A"),  # With seed 0
+            (["A", "B", "C"], "B", None, 42, "C", None),  # Ideal answer in options
+            (
+                ["D", "E", "F"],
+                "E",
+                MultipleChoiceQuestion.DEFAULT_UNSURE_OPTION,
+                0,
+                "B",
+                "A",
+            ),
+            (
+                ["A", "B", "Not sure"],
+                "C",
+                "Not sure",
+                0,
+                "A",
+                "D",
+            ),  # Unsure answer in options
+        ],
+    )
+    def test_answer_letters(
+        self,
+        options: list[str],
+        ideal_answer: str,
+        unsure_answer: str | None,
+        seed: int,
+        expected_ideal_letter: str,
+        expected_unsure_letter: str | None,
+    ) -> None:
+        """Test that ideal_answer_letter and unsure_answer_letter return correct letters after shuffling."""
+        mc_question = MultipleChoiceQuestion(
+            question="test question",
+            options=options,
+            ideal_answer=ideal_answer,
+            unsure_answer=unsure_answer,
+            shuffle_seed=seed,  # Use specific seeds for predictable shuffling
+        )
+        # Check ideal answer letter
+        assert mc_question.ideal_answer_letter == expected_ideal_letter
+        assert ideal_answer in mc_question.options
+
+        # Check unsure answer letter
+        assert mc_question.unsure_answer_letter == expected_unsure_letter
+        if unsure_answer is not None:
+            assert unsure_answer in mc_question.options
+
 
 class TestMultipleChoiceEvaluation:
     @pytest.mark.parametrize(
