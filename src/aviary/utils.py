@@ -113,10 +113,15 @@ def validate_base64_image(image: str) -> str:
 
 def is_coroutine_callable(obj) -> bool:
     """Get if the input object is awaitable."""
-    if inspect.isfunction(obj) or inspect.ismethod(obj):
-        return inspect.iscoroutinefunction(obj)
     if callable(obj):
-        return inspect.iscoroutinefunction(obj.__call__)
+        if callable(obj):
+            # Check if it's an instance method or function
+            return (
+                hasattr(obj.__call__, "__code__")
+                and obj.__call__.__code__.co_flags & 0x80
+            )
+        # Check if it's a function or method
+        return hasattr(obj, "__code__") and obj.__code__.co_flags & 0x80
     return False
 
 
