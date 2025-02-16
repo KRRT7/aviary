@@ -62,7 +62,9 @@ class Frame(BaseModel):
 
     @staticmethod
     def _custom_serializer(value: Serializable, handler, info):  # noqa: ARG004
-        if isinstance(value, BaseModel):
+        if hasattr(
+            value, "model_dump"
+        ):  # typically faster than isinstance for BaseModel checks
             return value.model_dump()
         return handler(value)
 
